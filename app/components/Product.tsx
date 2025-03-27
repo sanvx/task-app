@@ -2,16 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import { ProductType } from "../types/productsTypes";
 
 interface ProductProps {
   product: ProductType;
+  onDelete: (id: number) => void;
+  onLike: (product: ProductType) => void;
 }
 
-export default function Product({ product }: ProductProps) {
+export default function Product({ product, onLike, onDelete }: ProductProps) {
   return (
-    <Link
+    <motion.a
+      initial={{ scale: 0.95, opacity: 1 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0, opacity: 1 }}
+      transition={{ duration: 0.1 }}
       href={`/products/${product.id}`}
       className="w-72 min-h-[350px] flex flex-col gap-4 items-center p-4 rounded-md shadow-md hover:shadow-lg transition bg-white"
     >
@@ -28,7 +35,15 @@ export default function Product({ product }: ProductProps) {
         <div className="flex items-center justify-between w-full justify-self-end">
           <p className="font-semibold text-green-600">${product.price}</p>
           <div className="flex gap-1 z-20">
-            <button className="bg-red-500 rounded-md cursor-pointer text-white p-1.5 z-20">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onDelete(product.id);
+              }}
+              className="bg-red-500 rounded-md cursor-pointer text-white p-1.5 z-20"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -43,26 +58,51 @@ export default function Product({ product }: ProductProps) {
                   d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
                 />
               </svg>
-            </button>
-            <button className="bg-blue-500 rounded-md cursor-pointer text-white p-1.5 z-50">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
-                />
-              </svg>
-            </button>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onLike(product);
+              }}
+              className="bg-blue-500 rounded-md cursor-pointer text-white p-1.5 z-50"
+            >
+              {product.liked ? (
+                <svg
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                </svg>
+              ) : (
+                <svg
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+                  />
+                </svg>
+              )}
+            </motion.button>
           </div>
         </div>
       </div>
-    </Link>
+    </motion.a>
   );
 }
