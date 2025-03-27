@@ -13,7 +13,7 @@
 }
 
 body {
-  background: var(--background);
+  background: rgb(213, 213, 213);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

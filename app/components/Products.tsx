@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import Product from "./Product";
 import { ProductType } from "../types/productsTypes";
 
@@ -29,14 +30,16 @@ export default function Products() {
   }, []);
 
   return (
-    <div>
-      {isLoading && <h1>Loading...</h1>}
-      {!isLoading && error && <h1>{error}</h1>}
-      {!isLoading && !error && products.length > 0
-        ? products.map((product) => (
+    <div className="flex flex-wrap m-10 gap-4 justify-center">
+      {!isLoading &&
+        !error &&
+        (products.length > 0 ? (
+          products.map((product) => (
             <Product key={product.id} product={product} />
           ))
-        : !isLoading && !error && <h1>No products found</h1>}
+        ) : (
+          <h1>No products found</h1>
+        ))}
     </div>
   );
 }
