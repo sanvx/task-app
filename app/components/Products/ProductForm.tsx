@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import React, { useState} from 'react';
+import { useRouter } from 'next/navigation';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { ProductType } from '@/app/types/productsTypes';
@@ -27,7 +27,6 @@ interface ProductFormProps {
 export default function ProductForm({ initialData, formType }: ProductFormProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { products } = useAppSelector((state) => state.products);
   
   const [formData, setFormData] = useState<ProductType>({
     id: initialData?.id || Date.now(),
@@ -126,6 +125,7 @@ export default function ProductForm({ initialData, formType }: ProductFormProps)
             name="category"
             value={formData.category}
             onChange={handleChange}
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -138,6 +138,7 @@ export default function ProductForm({ initialData, formType }: ProductFormProps)
             type="url"
             id="image"
             name="image"
+            required
             value={formData.image}
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
