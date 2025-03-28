@@ -4,7 +4,7 @@ import { use } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { useAppSelector } from "@/pages/store/hooks";
+import { useAppSelector } from "@/app/store/hooks";
 
 export default function ProductPage({
   params,

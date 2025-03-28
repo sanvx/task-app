@@ -3,7 +3,7 @@
 import { use } from "react";
 import Link from "next/link";
 
-import ProductForm from "@/pages/components/Products/ProductForm";
+import ProductForm from "@/app/components/Products/ProductForm";
 import { useAppSelector } from "../../store/hooks";
 
 export default function EditProductPage({

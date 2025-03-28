@@ -3,8 +3,8 @@
 import React, { useState} from 'react';
 import { useRouter } from 'next/navigation';
 
-import { useAppDispatch, useAppSelector } from '@/pages/store/hooks';
-import { ProductType } from '@/pages/types/productsTypes';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { ProductType } from '@/app/types/productsTypes';
 
 const addProduct = (product: ProductType) => ({
   type: 'products/addProduct',
