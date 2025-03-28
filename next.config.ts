@@ -5,11 +5,15 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "http",
+        hostname: "*",
+      },
+      {
         protocol: "https",
-        hostname: "fakestoreapi.com"
-      }
-    ]
-  }
+        hostname: "*",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

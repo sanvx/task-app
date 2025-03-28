@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-import { ProductType } from "../types/productsTypes";
+import { ProductType } from "../../types/productsTypes";
 
 interface ProductProps {
   product: ProductType;
@@ -14,11 +14,7 @@ interface ProductProps {
 
 export default function Product({ product, onLike, onDelete }: ProductProps) {
   return (
-    <motion.a
-      initial={{ scale: 0.95, opacity: 1 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0, opacity: 1 }}
-      transition={{ duration: 0.1 }}
+    <Link
       href={`/products/${product.id}`}
       className="w-72 min-h-[350px] flex flex-col gap-4 items-center p-4 rounded-md shadow-md hover:shadow-lg transition bg-white"
     >
@@ -103,6 +99,6 @@ export default function Product({ product, onLike, onDelete }: ProductProps) {
           </div>
         </div>
       </div>
-    </motion.a>
+    </Link>
   );
 }
